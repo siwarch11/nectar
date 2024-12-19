@@ -114,11 +114,11 @@ class CartScreen extends StatelessWidget {
             backgroundColor: Colors.white, // BottomNavigationBar background color white
             selectedItemColor: Colors.green,
             unselectedItemColor: Colors.black,
-            currentIndex: 2, // Set to 2 as CartScreen is currently selected
+            currentIndex: 2, 
             type: BottomNavigationBarType.fixed,
             onTap: (index) {
               if (index == 0) {
-                // Navigate to HomeScreen
+                
                 Navigator.pushNamed(context, '/home');
               } 
             },
