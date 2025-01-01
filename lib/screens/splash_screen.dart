@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
-import 'onboarding_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // Import FontAwesome
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/onboarding');
     });
 
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.green,
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center, 
           crossAxisAlignment: CrossAxisAlignment.center, 
           children: [
-           
-            Image.asset(
-              'lib/assets/images/logo.png',
-              width: 80, 
-              height: 80, 
-            ),
-            const SizedBox(width: 15), 
             
+            FaIcon(
+              FontAwesomeIcons.carrot,  
+              size: 60,  
+              color: Colors.white, 
+            ),
+            SizedBox(width: 15), 
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -37,7 +38,6 @@ class SplashScreen extends StatelessWidget {
                     letterSpacing: 3.0, 
                   ),
                 ),
-               
                 Text(
                   'online groceries',
                   style: TextStyle(

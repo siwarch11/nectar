@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart'; // Import your home screen
+import 'package:provider/provider.dart';
+import 'Authviewmodel.dart'; 
+import 'home_screen.dart';
+import 'SignupPage.dart';
+
+
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -30,32 +41,34 @@ class LoginScreen extends StatelessWidget {
               style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 20),
-            // Custom TextField for Email with underline
+            // Email TextField
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Your Email',
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: UnderlineInputBorder(
+                border: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
               ),
             ),
             const SizedBox(height: 15),
-            // Custom TextField for Password with underline
+            // Password TextField
             TextField(
+              controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
                 labelStyle: TextStyle(
                   color: Colors.grey[400],
                 ),
-                border: UnderlineInputBorder(
+                border: const UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
                 suffixIcon: Icon(Icons.visibility_off, color: Colors.grey[600]),
               ),
             ),
@@ -75,13 +88,19 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             // Log In Button
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
+              onPressed: () async {
+                final authViewModel = Provider.of<Authviewmodel>(context, listen: false);
+                bool isLoggedIn = await authViewModel.login(
+                  emailController.text,
+                  passwordController.text,
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
-                  ),
                 );
+                if (isLoggedIn) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -104,7 +123,12 @@ class LoginScreen extends StatelessWidget {
                   const Text('Don’t have an account? '),
                   TextButton(
                     onPressed: () {
-                      // Add sign up logic here
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignupPage(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Signup',
